@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mes Tâches (Python)</title>
+  <style>
+    body { font-family: sans-serif; background: #eef2f3; display: flex; justify-content: center; padding-top: 50px; }
+    .container { background: white; padding: 30px; border-radius: 10px; width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    h1 { text-align: center; color: #333; }
+    form { display: flex; gap: 10px; margin-bottom: 20px; }
+    input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+    button { padding: 10px 15px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    ul { list-style: none; padding: 0; }
+    li { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; align-items: center; }
+    .done { text-decoration: line-through; color: #999; }
+    a { text-decoration: none; color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Fiche des taches</h1>
+    
+    <form method="POST">
+      <input type="text" name="task" placeholder="Nouvelle tâche..." required>
+      <button type="submit">Ajouter</button>
+    </form>
+
+    <ul>
+      {% for task in tasks %}
+        <li>
+          <a href="{{ url_for('toggle', index=loop.index0) }}" style="color: #333; text-decoration: none;" class="{% if task.done %}done{% endif %}">
+            {{ task.text }}
+          </a>
+          <a href="{{ url_for('delete', index=loop.index0) }}">✕</a>
+        </li>
+      {% else %}
+        <li style="justify-content: center; color: #888;">Aucune tâche.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>
